@@ -170,6 +170,8 @@ Other ablations can be set with `--cfg-options`. For example, `model.pts_bbox_he
 
 ## Acknowledgement
 
+This work was funded by the German Federal Ministry of Research, Technology and Space (BMFTR) within the project ADAPTAV as part of the Software Campus programme.
+
 This codebase is built on [OmniDrive](https://github.com/NVlabs/OmniDrive), [StreamPETR](https://github.com/exiawsh/StreamPETR), [mmdetection3d](https://github.com/open-mmlab/mmdetection3d) and [LLaVA](https://github.com/haotian-liu/LLaVA). The flow-matching trajectory expert is inspired by [SmolVLA](https://huggingface.co/papers/2506.01844) and [π0](https://www.physicalintelligence.company/blog/pi0). The Turning-nuScenes split comes from [MomAD](https://github.com/adept-thu/MomAD). We thank the authors for releasing their work.
 
 ## License
