@@ -517,7 +517,9 @@ class StreamPETRHead(AnchorFreeHead):
                 '.multihead_attn.': '.attentions.1.',
                 '.decoder.norm.': '.decoder.post_norm.'
             }
-            state_dict_keys = list(state_dict.keys())
+            # Only rename this head's own keys; `state_dict` holds the whole model
+            # (e.g. the LLM also has `.self_attn.` parameters).
+            state_dict_keys = [k for k in state_dict.keys() if k.startswith(prefix)]
             for k in state_dict_keys:
                 for ori_key, convert_key in convert_dict.items():
                     if ori_key in k:

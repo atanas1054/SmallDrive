@@ -1,6 +1,6 @@
 # SmallDrive: An Efficient Vision-Language-Action Model for Autonomous Driving via Flow Matching
 
-**GCPR 2026**
+**GCPR 2026** · [🤗 Model weights](https://huggingface.co/atanas1054/SmallDrive)
 
 SmallDrive is a lightweight Vision-Language-Action (VLA) model that combines high-level semantic reasoning with fast trajectory generation. It builds on [OmniDrive](https://github.com/NVlabs/OmniDrive) with two core changes:
 
@@ -70,6 +70,16 @@ Multi-view images are encoded by EVA-02-B. A Q-Former3D (StreamPETR) with global
 
 Follow [docs/setup.md](docs/setup.md) to set up the environment (PyTorch 1.13, mmcv-full 1.6.2, mmdet3d v1.0.0rc6). It also covers downloading nuScenes, the OmniDrive-nuScenes annotations and the pretrained TinyLlama checkpoint.
 
+### Pretrained SmallDrive checkpoint
+
+The trained model used for the paper results is available on Hugging Face: [atanas1054/SmallDrive](https://huggingface.co/atanas1054/SmallDrive) (3.5 GB).
+
+```bash
+huggingface-cli download atanas1054/SmallDrive smalldrive_gcpr2026.pth --local-dir ckpts/
+```
+
+The commands below use `ckpts/smalldrive_gcpr2026.pth`. To evaluate a model you trained yourself, use `work_dirs/smalldrive/latest.pth` instead.
+
 ### Training
 
 SmallDrive starts from OmniDrive's 2D-pretrained TinyLlama checkpoint (stage 1, LLaVA pretraining). It is then trained end-to-end on nuScenes with the detection, language and flow-matching losses (stage 2). The default config trains for 24 epochs on 4 GPUs with batch size 4 per GPU:
@@ -85,7 +95,7 @@ The schedule is defined in iterations. If you use a different number of GPUs or 
 **1. Run inference** with the planning prompt. Set `generate_text=False` to get only the flow-matching trajectory (fast); predictions are written per sample to `./results/smalldrive/`:
 
 ```bash
-tools/dist_test.sh projects/configs/SmallDrive/smalldrive.py work_dirs/smalldrive/latest.pth 4 \
+tools/dist_test.sh projects/configs/SmallDrive/smalldrive.py ckpts/smalldrive_gcpr2026.pth 4 \
     --format-only --cfg-options model.generate_text=False
 ```
 
@@ -108,7 +118,7 @@ To run inference only on the turning samples, add `model.eval_tokens_file=evalua
 
 ```bash
 # scene description, action explanation and counterfactual QA, with text generation
-tools/dist_test.sh projects/configs/SmallDrive/smalldrive_lang.py work_dirs/smalldrive/latest.pth 4 --format-only
+tools/dist_test.sh projects/configs/SmallDrive/smalldrive_lang.py ckpts/smalldrive_gcpr2026.pth 4 --format-only
 
 # BLEU / ROUGE-L / CIDEr (/ BERTScore)
 python evaluation/eval_language.py --pred_dir results/smalldrive_lang/ --gt_dir data/nuscenes/vqa/val/
@@ -121,7 +131,7 @@ python evaluation/driveLM_eval_ollama.py --pred_dir results/smalldrive_lang/ \
 ### Latency
 
 ```bash
-python tools/profile_smalldrive_latency.py projects/configs/SmallDrive/smalldrive.py work_dirs/smalldrive/latest.pth \
+python tools/profile_smalldrive_latency.py projects/configs/SmallDrive/smalldrive.py ckpts/smalldrive_gcpr2026.pth \
     --samples 100 --warmup 10
 ```
 

@@ -53,6 +53,12 @@ git clone https://huggingface.co/exiawsh/omnidrive_tiny_pretrain
 
 Only `eva_base_remapped.pth` and `finetune-1.1b-llava-tiny-llama-eva640/` are needed.
 
+To evaluate without training, also download the trained SmallDrive model:
+
+```shell
+huggingface-cli download atanas1054/SmallDrive smalldrive_gcpr2026.pth --local-dir ckpts/
+```
+
 **5. Folder structure**
 
 ```
@@ -65,6 +71,7 @@ SmallDrive
 ├── tools/
 ├── evaluation/
 ├── ckpts/
+│   ├── smalldrive_gcpr2026.pth          # trained SmallDrive model (optional, from Hugging Face)
 │   └── omnidrive_tiny_pretrain/
 │       ├── eva_base_remapped.pth
 │       └── finetune-1.1b-llava-tiny-llama-eva640/
