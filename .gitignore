@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Data, checkpoints and outputs
+data/
+ckpts/
+work_dirs/
+results/
+test/
+val/
+logs/
+*.pth
+*.pkl
+!data_gen/planning_anchor_infos.pkl
+
+# Third-party repos cloned during setup
+mmdetection3d/
+OpenLane-V2/
+
+# Misc
+.vscode/
+.idea/
+.claude/
+*.log
+*.tmp
+*.onnx
+*.engine

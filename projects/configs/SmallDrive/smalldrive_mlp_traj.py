@@ -1,0 +1,17 @@
+# Ablation: replace the flow-matching trajectory expert with a deterministic
+# direct-regression MLP head (mask-aware pooled LLM context -> 6 waypoint displacements).
+_base_ = ['./smalldrive.py']
+
+model = dict(
+    save_path='./results/smalldrive_mlp_traj/',
+    trajectory_head=dict(
+        _delete_=True,
+        type='MLPFullContextTrajectoryHead',
+        hidden_size=2048,
+        mlp_dim=1024,
+        num_path_points=6,
+        path_coord_dim=2,
+        dropout=0.0,
+        loss_traj=dict(type='SmoothL1Loss', beta=1.0, loss_weight=1.0),
+    ),
+)
