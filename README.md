@@ -64,6 +64,26 @@ Multi-view images are encoded by EVA-02-B. A Q-Former3D (StreamPETR) with global
 | SmallDrive (autoregressive trajectory) | 3.33 | 0.32 |
 | **SmallDrive (flow matching)** | **0.36** | **0.31** |
 
+## Qualitative Results
+
+Each example shows the six surround-view images with 3D object detections (left) and the front camera with the predicted trajectory (green) and the ground-truth trajectory (red) (right). Below each example are the question and SmallDrive's answer.
+
+**Correct textual outputs** (correct content marked in green):
+
+<div align="center">
+<img src="docs/figures/qualitative_correct.jpg" width="1000">
+</div>
+
+**Failure cases** (correct content in green, wrong content in red):
+
+<div align="center">
+<img src="docs/figures/qualitative_failure.jpg" width="1000">
+</div>
+
+The failure cases show two typical failure modes of current VLA models:
+- **Visual grounding failures:** the LLM hallucinates elements, such as pedestrians that are not there, because of the compressed visual bottleneck.
+- **Causal disconnect:** the predicted trajectory is a safe maneuver, but the text generated in parallel gives an incorrect or contradictory explanation.
+
 ## Getting Started
 
 ### Installation and data
